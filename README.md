@@ -8,10 +8,10 @@
 
 ## 程序启动
 - 运行 sensitiveApi.py 可直接启动
-- 测试demo
-1、curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个大王八,大王八"}'  
+- 测试demo 
+curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个大王八,大王八"}'  
 
-2、curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问 www.taobao.com"}'
+curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问 www.taobao.com"}'
 
 ## 返回格式
 - 接口返回json格式，字段可能是如下2种形式。如果检测到是广告文本，则不再进行敏感词检测；如果不是广告文本，则接着下一步的敏感词检测。
