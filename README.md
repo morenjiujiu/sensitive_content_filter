@@ -20,7 +20,7 @@
 - 测试demo 
     - 检测为广告文本的  
     **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问www.taobao.com，刷单5毛一条"}'  
-    **返回结果** {"grade": "删除", "regularResult": "疑似[网页链接或邮箱]", "txt": "访问 www.taobao.com", "txtLength": 17}
+    **返回结果** {"grade": "删除", "regularResult": "疑似[网页链接或邮箱]", "txt": "访问www.taobao.com，刷单5毛一条", "txtLength": 23}
     
     - 非广告文本的，进一步进行敏感词检测  
     **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个<font color=#FF7F50>大王八</font>,<font color=#FF7F50>大王八</font>"}'  
