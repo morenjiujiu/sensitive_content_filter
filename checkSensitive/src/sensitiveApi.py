@@ -5,15 +5,12 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-import time
-import qbTransform
-import commonUtil
+import commonUtil, qbTransform
 import json
 from flask import Flask,request,Response
 from flask_restful import Api
 from gevent.pywsgi import WSGIServer
 import logging
-import traceback
 
 #pip install flask
 #pip install flask_restful
@@ -177,11 +174,11 @@ def replaceSensitiveWord(txt, replaceChar, matchType=MinMatchType):
 
 
 # 特殊字符集
-f = open("stopword.txt")
+f = open("./data/stopword.txt")
 stopWordSet = [i.split('\n')[0] for i in f.readlines()]
 
 # 敏感词集
-f1 = open("dict1.txt")
+f1 = open("./data/dict.txt")
 lst = f1.readlines()
 sensitiveWordSet = [i.split("\n")[0].split("\t") for i in lst]
 # print u"词汇总数:", len(sensitiveWordSet)
@@ -196,8 +193,8 @@ def get():
     try:
         txt=request.json['txt']
         txt_length=len(txt)
-        txt_convert=qbTransform.strQ2B(txt) #全角转半角
-        reg_result=commonUtil.getReg(txt_convert) #正则过滤
+        txt_convert= qbTransform.strQ2B(txt) #全角转半角
+        reg_result= commonUtil.getReg(txt_convert) #正则过滤
 
         if reg_result==u"非广告文本":
             #是否包含敏感词
@@ -214,9 +211,9 @@ def get():
                 sensitive_list_word_length+=len(word)
 
             #待检测语句的敏感度得分
-            score=commonUtil.calcScore(sensitive_list_str)
+            score= commonUtil.calcScore(sensitive_list_str)
             #待检测语句的敏感级别
-            grade=commonUtil.calcGrade(score,sensitive_list_word_length,txt_length)
+            grade= commonUtil.calcGrade(score, sensitive_list_word_length, txt_length)
             #替换敏感词后的文本
             txt_replace=replaceSensitiveWord(txt=txt_convert,replaceChar='*',matchType=MaxMatchType) #默认MinMatchTYpe
 
