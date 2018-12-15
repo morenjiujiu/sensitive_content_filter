@@ -17,7 +17,7 @@
 
 ## 程序启动
 - 运行 sensitiveApi.py 可直接启动
-- 测试demo(原文本中的敏感词已经用彩色标出)   
+- 测试demo 
     - 检测为广告文本的  
     **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问www.taobao.com，刷单5毛一条"}'  
     **返回结果** {"grade": "删除", "regularResult": "疑似[网页链接或邮箱]", "txt": "访问 www.taobao.com", "txtLength": 17}
