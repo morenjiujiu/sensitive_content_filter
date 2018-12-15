@@ -2,9 +2,18 @@
 
 - 参考博客 https://my.oschina.net/magicalSam/blog/1528428， 本文是python实现的，在博客的基础上多了一点功能
 - 添加了全角半角转换等功能，可以检测“法@@轮！功”这种中间有干扰项的字符串
-- 运行 sensitiveApi.py 即可启动，如下格式来调用接口：
-curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个大王八,大王八"}'  
-curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问 www.taobao.com"}'
+
+# 运行环境
+- python2.7
+
+#程序启动
+- 运行 sensitiveApi.py 可直接启动
+- 测试demo
+1、curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个大王八,大王八"}'  
+
+2、curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问 www.taobao.com"}'
+
+# 返回格式
 - 接口返回json格式，字段可能是如下2种形式。如果检测到是广告文本，则不再进行敏感词检测；如果不是广告文本，则接着下一步的敏感词检测。
 
   a 检测为广告文本  
