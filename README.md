@@ -17,14 +17,17 @@
 
 ## 程序启动
 - 运行 sensitiveApi.py 可直接启动
-- 测试demo   
-    **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个大王八,大王八"}'  
+- 测试demo(原文本中的敏感词已经用彩色标出)   
+    - 检测为广告文本的  
+    **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问www.taobao.com，刷单5毛一条"}'  
+    **返回结果** {"grade": "删除", "regularResult": "疑似[网页链接或邮箱]", "txt": "访问 www.taobao.com", "txtLength": 17}
+    
+    - 非广告文本的，进一步进行敏感词检测  
+    **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个<font color=#FF7F50>大王八</font>,<font color=#FF7F50>大王八</font>"}'  
     **返回结果** {"sensitiveWordList": "[其他:王八,,其他:王八]", "ifContainSensitiveWord": true, "txtLength": 16, "grade": "掩码", "score": 4, "regularResult": "非广告文本", "txt": "小姐姐真漂亮，像个大王八,大王八", "txtReplace": "小姐姐真漂亮,像个大\*\*大\*\*", "sensitiveWordCount": 2}
       
-    **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://localhost:4000/sensitive -d '{"txt":"访问 www.taobao.com"}'  
-    **返回结果** {"grade": "删除", "regularResult": "疑似[网页链接或邮箱]", "txt": "访问 www.taobao.com", "txtLength": 17
-    
-    **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://127.0.0.1:4000/sensitive -d '{"txt":"国家主席习近平在中国青岛主持上海合作组织成员国元首理事会第十八次会议。王八蛋然后就是fuck dog 跟随着egg 主人公怒哀乐情节中。法.轮#功 难过就手机卡复制器，一个贱人去看电影。"}'  
+     - 非广告文本的，进一步进行敏感词检测  
+    **调用接口** curl -H "Content-type: application/json; charset=utf-8" -X POST http://127.0.0.1:4000/sensitive -d '{"txt":"国家主席<font color=#FF7F50>习近平</font>在中国青岛主持上海合作组织成员国元首理事会第十八次会议。<font color=#FF7F50>王八蛋</font>然后就是<font color=#FF7F50>fuck</font> dog 跟随着egg 主人公怒哀乐情节中。<font color=#FF7F50>法.轮#功</font> 难过就<font color=#FF7F50>手机卡复制器</font> ，<font color=#FF7F50>一个贱人</font> 去看电影。"}'  
     **返回结果** {"sensitiveWordList": "[政治:习近平,其他:王八,其他:fuck,暴恐:法.轮#功,暴恐:轮#功,社会:手机卡复制器,,色情:贱人]", "ifContainSensitiveWord": true, "txtLength": 93, "grade": "掩码",   "score": 24, "regularResult": "非广告文本", "txt": "国家主席习近平在中国青岛主持上海合作组织成员国元首理事会第十八次会议。王八蛋然后就是fuck dog 跟随着egg 主人公怒哀乐情节中。法.轮#功 难过就手机卡复制器，一个贱人去看电影。", "txtReplace": "国家主席\*\*\*在中国青岛主持上海合作组织成员国元首理事会第十八次会议。\*\*蛋然后就是\*\*\*\* dog 跟随着egg 主人公怒哀乐情节中。\*\*\*\*\* 难过就\*\*\*\*\*\*\*一个**去看电影。", "sensitiveWordCount": 7}
     
 ## 返回格式
