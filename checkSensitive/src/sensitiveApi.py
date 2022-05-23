@@ -1,9 +1,6 @@
 #encoding:utf-8
 from __future__ import division
 
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 import commonUtil, qbTransform
 import json
@@ -45,8 +42,8 @@ def initSensitiveWordMap(sensitiveWordSet):
         if type(key)=='unicode' and type(category)=='unicode' : #转换为unicode
             pass
         else:
-            key=unicode(key)
-            category=unicode(category)
+            key=str(key)
+            category=str(category)
 
         nowMap = sensitiveWordMap
         for i in range(len(key)):
@@ -174,11 +171,11 @@ def replaceSensitiveWord(txt, replaceChar, matchType=MinMatchType):
 
 
 # 特殊字符集
-f = open("./data/stopword.txt")
+f = open("../data/stopword.txt", encoding="utf8")
 stopWordSet = [i.split('\n')[0] for i in f.readlines()]
 
 # 敏感词集
-f1 = open("./data/dict.txt")
+f1 = open("../data/dict.txt", encoding="utf8")
 lst = f1.readlines()
 sensitiveWordSet = [i.split("\n")[0].split("\t") for i in lst]
 # print u"词汇总数:", len(sensitiveWordSet)
@@ -238,13 +235,14 @@ def get():
             }
 
 
-        result_log=json.dumps(result_json, encoding='utf-8', ensure_ascii=False)
+        result_log=json.dumps(result_json, ensure_ascii=False).encode('utf8')
         logger.info(result_log)
+
 
         # time_end = time.time()
         # print u"运行时间:", (time_end - time_start) * 1000, u"ms"
 
-    except Exception,e:
+    except Exception as e:
         result_log={}
         logger.info("please check the input query! {} will be given by default---"+str(e))
 
