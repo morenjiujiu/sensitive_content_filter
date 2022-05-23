@@ -1,20 +1,13 @@
 #encoding:utf-8
 from __future__ import division
 
-import sys
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
 # sys.path.append('/Users/luyao/anaconda/lib/python2.7/site-packages')
 
 
 def strQ2B(ustring):
     """全角转半角"""
     rstring = ""
-    if type(ustring)=='unicode':
-        pass
-    else:
-        ustring=ustring.decode('utf-8')
     for uchar in ustring:
         inside_code = ord(uchar)
         if inside_code == 12288:  #全角空格直接转换
@@ -22,17 +15,13 @@ def strQ2B(ustring):
         elif (inside_code >= 65281 and inside_code <= 65374):  # 全角字符（除空格）根据关系转化
             inside_code -= 65248
 
-        rstring += unichr(inside_code)
+        rstring += chr(inside_code)
     return rstring
 
 
 def strB2Q(ustring):
     """半角转全角"""
     rstring = ""
-    if type(ustring)=='unicode':
-        pass
-    else:
-        ustring=ustring.decode('utf-8')
     for uchar in ustring:
         inside_code = ord(uchar)
         if inside_code == 32:  # 半角空格直接转化
@@ -40,7 +29,7 @@ def strB2Q(ustring):
         elif inside_code >= 32 and inside_code <= 126:  # 半角字符（除空格）根据关系转化
             inside_code += 65248
 
-        rstring += unichr(inside_code)
+        rstring += chr(inside_code)
     return rstring
 
 """
